@@ -1,0 +1,12 @@
+{
+    "name": "EECS 388 Project 3",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "workspace",
+    "workspaceFolder": "/workspaces/project3",
+    "remoteUser": "eecs388",
+    "postCreateCommand": ["sudo", "chown", "eecs388", "/var/run/docker.sock"],
+    "extensions": ["ms-azuretools.vscode-docker", "golang.go"],
+    "remoteEnv": {
+        "HOST_PROJECT_DIR": "${localWorkspaceFolder}"
+    }
+}

@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  dns:
+    build: ./
+    command: ./network/dns/dns_server
+    networks:
+      bankwifi:
+        ipv4_address: 10.38.8.2
+  http:
+    build: ./
+    command: ./network/http/http_server
+    networks:
+      bankwifi:
+        ipv4_address: 10.38.8.3
+  client:
+    build: ./
+    volumes:
+      - ${HOST_PROJECT_DIR}/intercepted_files:/files
+      - ${HOST_PROJECT_DIR}:/workspace/project3
+    depends_on:
+      - "dns"
+      - "http"
+    command:
+      [
+        /bin/bash,
+        -c,
+        "tcpdump -i any -U -w /workspace/project3/mitm.pcap & ./mitm/mitm & sleep 0.5 && ./network/client/client & wait -n && kill $$(jobs -p)"
+      ]
+    networks:
+      bankwifi:
+        ipv4_address: 10.38.8.4
+
+networks:
+  bankwifi:
+    ipam:
+      config:
+        - subnet: "10.38.8.0/24"
