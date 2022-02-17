@@ -45,7 +45,7 @@ func TestHasQuestionForDomain(t *testing.T) {
 		t.Run(v.name, func(t *testing.T) {
 			got := HasQuestionForDomain(dnsWithDomainQuestions(v.questions), v.domain)
 			if got != v.expected {
-				t.Errorf("expected QuestionForDomain(dns, %q) to return %v, got %v", v.domain, v.expected, got)
+				t.Errorf("expected HasQuestionForDomain(dns, %q) to return %v, got %v", v.domain, v.expected, got)
 			}
 		})
 	}
